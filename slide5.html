@@ -266,9 +266,10 @@ function render(){
   $('#prog').text(step+' / '+total);
 }
 $('#nextBtn').on('click',()=>{ if(step<total){step++;render();}});
-$('#backBtn').on('click',()=>{ if(step>1){step--;render();} else {window.location.href='slide4-kuis.html';}});
+$('#backBtn').on('click',()=>{ if(step>1){step--;render();} else {window.location.href='slide3.html';}});
 $('#panelBtn').on('click',()=> $('#panelContainer').fadeToggle(300));
 render();
 </script>
 </body>
 </html>
+
