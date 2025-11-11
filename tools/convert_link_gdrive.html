@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konversi Link Google Drive</title>
+
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 80px;
+    }
+    .card {
+      max-width: 720px;
+      margin: auto;
+    }
+    #resultLink {
+      background-color: #f1f3f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-4 text-center fw-bold">Konversi Link Google Drive</h4>
+        
+        <!-- Input URL -->
+        <div class="mb-3">
+          <label for="gdriveInput" class="form-label">Masukkan Link Google Drive:</label>
+          <input type="text" id="gdriveInput" class="form-control" placeholder="https://drive.google.com/file/d/.../view?usp=sharing">
+        </div>
+
+        <!-- Hasil Konversi -->
+        <div class="mb-3">
+          <label class="form-label">Hasil Konversi:</label>
+          <div class="input-group">
+            <input type="text" id="resultLink" class="form-control" readonly>
+            <button id="copyBtn" class="btn btn-outline-primary" type="button">
+              <i class="bi bi-clipboard"></i> Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Preview Alternative -->
+        <div id="previewSection" class="text-center mt-4 d-none">
+          <h6 class="fw-semibold mb-3">File Siap Dibuka:</h6>
+          <a id="openFileBtn" href="#" target="_blank" class="btn btn-success">
+            <i class="bi bi-box-arrow-up-right"></i> Buka File di Tab Baru
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+
+      $('#gdriveInput').on('input', function() {
+        const inputVal = $(this).val().trim();
+        const regex = /https:\/\/drive\.google\.com\/file\/d\/([^\/]+)\//;
+        const match = inputVal.match(regex);
+
+        if (match && match[1]) {
+          const fileId = match[1];
+          const directLink = `https://drive.google.com/uc?id=${fileId}`;
+          $('#resultLink').val(directLink);
+          $('#previewSection').removeClass('d-none');
+          $('#openFileBtn').attr('href', directLink);
+        } else {
+          $('#resultLink').val('');
+          $('#previewSection').addClass('d-none');
+          $('#openFileBtn').attr('href', '#');
+        }
+      });
+
+      $('#copyBtn').on('click', function() {
+        const link = $('#resultLink').val();
+        if (link) {
+          navigator.clipboard.writeText(link).then(() => {
+            $(this).text('Copied!').removeClass('btn-outline-primary').addClass('btn-success');
+            setTimeout(() => {
+              $(this).html('<i class="bi bi-clipboard"></i> Copy').removeClass('btn-success').addClass('btn-outline-primary');
+            }, 1500);
+          });
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
