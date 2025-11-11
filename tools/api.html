@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Materi API & CORS + Playground CRUD Mahasiswa</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    body { background-color:#f8f9fa; }
+    pre code { white-space:pre-wrap; }
+    .navbar { box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .section-title { border-left:4px solid #0d6efd; padding-left:.5rem; margin-top:1.5rem; }
+    .card:hover { transform: translateY(-3px); transition: all .2s; }
+    .spinner { display:none; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <span class="navbar-brand fw-semibold">Materi API, CORS & Playground Mahasiswa</span>
+  </div>
+</nav>
+
+<div class="container py-4">
+
+  <!-- ===========================
+        BAGIAN 1: MATERI API
+  ============================ -->
+  <h1 class="h4 mb-3 section-title">📘 MATERI API</h1>
+  <p><strong>API (Application Programming Interface)</strong> adalah antarmuka yang memungkinkan aplikasi berbeda berkomunikasi dan saling bertukar data.  
+     Dalam konteks sistem informasi kampus, API digunakan agar aplikasi seperti <em>portal mahasiswa</em>, <em>akademik</em>, dan <em>keuangan</em> bisa saling terhubung.</p>
+
+  <h5>🔹 Fungsi API</h5>
+  <ul>
+    <li>Menghubungkan sistem yang berbeda (integrasi data antar aplikasi)</li>
+    <li>Mempercepat pengembangan (frontend dan backend bisa dikerjakan paralel)</li>
+    <li>Menjamin konsistensi data (semua aplikasi membaca data dari API yang sama)</li>
+    <li>Mendukung keamanan dan kontrol akses (misal dengan token)</li>
+  </ul>
+
+  <h5>🔹 Komponen REST API</h5>
+  <ul>
+    <li><strong>Endpoint:</strong> URL sumber data, misal <code>https://api.kampus.ac.id/mahasiswa</code></li>
+    <li><strong>Method:</strong> Operasi HTTP seperti <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code></li>
+    <li><strong>Header:</strong> Metadata permintaan (contoh: <code>Content-Type: application/json</code>)</li>
+    <li><strong>Body:</strong> Data JSON yang dikirim pada <code>POST</code> atau <code>PUT</code></li>
+  </ul>
+
+  <h5>🔹 Jenis HTTP Method (CRUD)</h5>
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr><th>Method</th><th>Fungsi</th><th>Contoh Endpoint</th><th>Deskripsi</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>GET</td><td>Baca data</td><td>/mahasiswa</td><td>Ambil daftar mahasiswa</td></tr>
+      <tr><td>POST</td><td>Tambah data</td><td>/mahasiswa</td><td>Tambah mahasiswa baru</td></tr>
+      <tr><td>PUT</td><td>Perbarui data</td><td>/mahasiswa/1</td><td>Perbarui data mahasiswa tertentu</td></tr>
+      <tr><td>DELETE</td><td>Hapus data</td><td>/mahasiswa/1</td><td>Hapus mahasiswa berdasarkan ID</td></tr>
+    </tbody>
+  </table>
+
+  <h5>🔹 Contoh Format Request/Response</h5>
+  <div class="row g-3">
+    <div class="col-md-6">
+<pre class="bg-light p-3 rounded"><code>// Request: GET /mahasiswa/1
+{
+  "method": "GET",
+  "url": "https://api.kampus.ac.id/mahasiswa/1"
+}</code></pre>
+    </div>
+    <div class="col-md-6">
+<pre class="bg-light p-3 rounded"><code>// Response JSON
+{
+  "id": 1,
+  "nama": "Yanti",
+  "nim": "20211001",
+  "prodi": "Sistem Informasi"
+}</code></pre>
+    </div>
+  </div>
+
+  <!-- ===========================
+        BAGIAN 2: MATERI CORS
+  ============================ -->
+  <h1 class="h4 section-title">🌐 MATERI CORS (Cross-Origin Resource Sharing)</h1>
+  <p><strong>CORS</strong> adalah mekanisme keamanan di browser yang membatasi situs web agar tidak sembarangan mengambil data dari domain lain tanpa izin.</p>
+
+  <h5>🔹 Contoh Kasus</h5>
+  <ul>
+    <li>Frontend Anda di <code>http://localhost:3000</code></li>
+    <li>API berada di <code>https://api.kampus.ac.id</code></li>
+  </ul>
+  <p>Ketika frontend melakukan request ke domain berbeda, browser akan mengirim <em>preflight request (OPTIONS)</em> untuk memastikan server API mengizinkan akses.</p>
+
+  <h5>🔹 Solusi Mengatasi CORS Error</h5>
+  <ul>
+    <li>Aktifkan header di server API:
+      <pre class="bg-light p-2 rounded"><code>Access-Control-Allow-Origin: *</code></pre>
+    </li>
+    <li>Gunakan proxy lokal (misal: <code>vite.config.js</code> atau <code>webpack-dev-server</code>)</li>
+    <li>Gunakan server backend yang sama origin (subdomain yang sama)</li>
+  </ul>
+
+  <div class="alert alert-info mt-3">
+    <strong>Catatan:</strong> CORS hanya berlaku pada browser, bukan pada alat seperti Postman atau Curl.
+  </div>
+
+  <!-- ===========================
+        BAGIAN 3: PLAYGROUND
+  ============================ -->
+  <h1 class="h4 section-title">🧩 PLAYGROUND CRUD DATA MAHASISWA</h1>
+  <p>Simulasi ini menggunakan API publik <code>https://jsonplaceholder.typicode.com/users</code> yang berfungsi seperti data mahasiswa kampus.</p>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex flex-wrap gap-2 mb-3">
+        <button id="btnGet" class="btn btn-primary">GET Mahasiswa</button>
+        <button id="btnPost" class="btn btn-success">POST (Tambah)</button>
+        <button id="btnPut" class="btn btn-warning text-white">PUT (Perbarui)</button>
+        <button id="btnDelete" class="btn btn-danger">DELETE (Hapus)</button>
+      </div>
+
+      <div class="spinner text-center my-3">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="text-muted mt-2">Mengambil data dari server...</p>
+      </div>
+
+      <div id="alert"></div>
+      <div id="output" class="row g-3"></div>
+    </div>
+  </div>
+
+  <!-- Modal Detail -->
+  <div class="modal fade" id="detailModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Detail Mahasiswa</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <pre class="bg-light p-3 rounded"><code id="detailContent"></code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(function(){
+  const API = "https://jsonplaceholder.typicode.com/users"; // anggap data mahasiswa
+
+  // ========== Fungsi utilitas ==========
+  function showAlert(type, msg){
+    $("#alert").html(`<div class="alert alert-${type} alert-dismissible fade show">
+      ${msg}
+      <button class="btn-close" data-bs-dismiss="alert"></button>
+    </div>`);
+  }
+
+  function renderMahasiswa(data){
+    let html = "";
+    data.forEach(m=>{
+      html += `
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">${m.name}</h5>
+              <p class="card-text mb-1"><strong>Email:</strong> ${m.email}</p>
+              <p class="card-text mb-1"><strong>Kota:</strong> ${m.address.city}</p>
+              <p class="card-text small text-muted">${m.company.name}</p>
+              <button class="btn btn-sm btn-outline-primary btn-detail" data-id="${m.id}">Detail</button>
+            </div>
+          </div>
+        </div>`;
+    });
+    $("#output").html(html);
+  }
+
+  // ========== GET ==========
+  $("#btnGet").click(()=>{
+    $(".spinner").show(); $("#output").empty();
+    $.ajax({
+      url: API,
+      method: "GET",
+      success: data=>{
+        $(".spinner").hide();
+        renderMahasiswa(data.slice(0,6));
+        showAlert("primary","Data mahasiswa berhasil dimuat (GET).");
+      },
+      error: ()=> showAlert("danger","Gagal mengambil data mahasiswa.")
+    });
+  });
+
+  // ========== POST ==========
+  $("#btnPost").click(()=>{
+    const newData = {
+      name: "Mahasiswa Baru",
+      email: "baru@kampus.ac.id",
+      address: { city: "Yogyakarta" },
+      company: { name: "Universitas Contoh" }
+    };
+    $.ajax({
+      url: API,
+      method: "POST",
+      data: JSON.stringify(newData),
+      contentType: "application/json; charset=UTF-8",
+      success: res=> showAlert("success", `Mahasiswa baru ditambahkan (ID: ${res.id}).`)
+    });
+  });
+
+  // ========== PUT ==========
+  $("#btnPut").click(()=>{
+    const updated = {
+      id: 1,
+      name: "Mahasiswa Update",
+      email: "update@kampus.ac.id",
+      address: { city: "Jakarta" },
+      company: { name: "Universitas Update" }
+    };
+    $.ajax({
+      url: `${API}/1`,
+      method: "PUT",
+      data: JSON.stringify(updated),
+      contentType: "application/json; charset=UTF-8",
+      success: res=> showAlert("warning", `Data Mahasiswa ID ${res.id} diperbarui.`)
+    });
+  });
+
+  // ========== DELETE ==========
+  $("#btnDelete").click(()=>{
+    $.ajax({
+      url: `${API}/1`,
+      method: "DELETE",
+      success: ()=> showAlert("danger","Data Mahasiswa ID=1 dihapus (simulasi DELETE).")
+    });
+  });
+
+  // ========== DETAIL ==========
+  $("#output").on("click", ".btn-detail", function(){
+    const id = $(this).data("id");
+    $.ajax({
+      url: `${API}/${id}`,
+      method: "GET",
+      success: data=>{
+        $("#detailContent").text(JSON.stringify(data, null, 2));
+        new bootstrap.Modal("#detailModal").show();
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
