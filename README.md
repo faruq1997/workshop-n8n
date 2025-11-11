@@ -1,6 +1,3 @@
-## 💾 **README.md**
-
-````markdown
 # 🧩 Workshop n8n — Backend Automation for Beginners
 
 **Faruq Aziz**  
