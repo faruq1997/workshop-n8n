@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frontend, Backend, Database — Workshop n8n</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+body {
+  background: linear-gradient(180deg, #faf9f5, #ebe3c7);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #2c1d12;
+  overflow: hidden;
+}
+h1 {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 700;
+}
+#scene {
+  position: relative;
+  height: 76vh;
+  margin-top: 10px;
+  border: 3px solid #d1c49d;
+  border-radius: 14px;
+  background: linear-gradient(to top, #d8f8fa 0%, #fffdf5 70%);
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+.logo-unm {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  background: #fff;
+  padding: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+footer {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.9);
+  border-top: 2px solid #d1c49d;
+  padding: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #43351c;
+}
+#panelBtn {
+  position: absolute;
+  top: 100px;
+  left: 10px;
+  z-index: 100;
+  background: #fff8;
+  border: 2px solid #d1c49d;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.center-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-80px);
+}
+.panel {
+  background: rgba(255,255,255,0.95);
+  border: 3px solid #bfa97e;
+  border-radius: 14px;
+  padding: 18px 24px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  width: min(950px, 92vw);
+}
+.point {
+  display: none;
+  font-size: 1.05rem;
+  animation: fadein 0.6s ease;
+}
+.point.active { display: block; }
+#hud {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: rgba(255,255,255,0.85);
+  border: 2px solid #d1c49d;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.9rem;
+}
+.controls {
+  position: absolute;
+  bottom: 10px;
+  right: 16px;
+  display: flex;
+  gap: 10px;
+  z-index: 50;
+}
+.btn-scroll {
+  background: linear-gradient(180deg, #f4e5b7, #e4cf91);
+  border: 2px solid #b79f6a;
+  color: #5a4316;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.btn-scroll:hover {
+  background: linear-gradient(180deg, #fff3cc, #e0cf9f);
+  transform: scale(1.05);
+}
+.lang-grid {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 16px;
+  justify-items: center;
+}
+.lang-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform .25s ease-in-out, opacity .5s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.lang-icon.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.lang-icon:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+@keyframes fadein {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <img src="https://faruq1997.github.io/icitri2022/logo-unm.webp" class="logo-unm" alt="Logo UNM">
+  <h1><i class="bi bi-code-square"></i> Bahasa & Database Populer — Frontend, Backend, Database</h1>
+
+  <div id="scene">
+    <div id="hud"><i class="bi bi-lightning-charge"></i> Progress: <span id="prog">1 / 6</span></div>
+    <button id="panelBtn">📋 Panel</button>
+
+    <div class="lang-grid">
+      <!-- Frontend -->
+      <img id="html" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="lang-icon">
+      <img id="css" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" class="lang-icon">
+      <img id="js" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="lang-icon">
+      <img id="dart" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" class="lang-icon">
+      <img id="swift" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" class="lang-icon">
+      <!-- Backend -->
+      <img id="node" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" class="lang-icon">
+      <img id="python" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="lang-icon">
+      <img id="go" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" class="lang-icon">
+      <img id="n8n" src="https://avatars.githubusercontent.com/u/45487711?s=200&v=4" class="lang-icon">
+      <!-- Database -->
+      <img id="mysql" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="lang-icon">
+      <img id="postgres" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" class="lang-icon">
+      <img id="mongodb" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" class="lang-icon">
+      <img id="firebase" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" class="lang-icon">
+      <img id="oracle" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg" class="lang-icon">
+    </div>
+
+    <!-- Panel -->
+    <div class="center-panel" id="panelContainer">
+      <div class="panel">
+        <div class="point active" id="p1">
+          <b>Analogi Dasar Web:</b>
+          <ul>
+            <li><b>HTML</b> = Kerangka tubuh (struktur aplikasi)</li>
+            <li><b>CSS</b> = Baju dan gaya tampilan</li>
+            <li><b>JavaScript</b> = Otak yang mengatur interaksi</li>
+          </ul>
+        </div>
+        <div class="point" id="p2">
+          <b>Frontend</b> (User Interface)
+          <ul><li>Bahasa populer: HTML, CSS, JavaScript, Dart, Swift</li></ul>
+        </div>
+        <div class="point" id="p3">
+          <b>Backend</b> (Logika & API)
+          <ul><li>Bahasa populer: Node.js, Python, Go, n8n</li></ul>
+        </div>
+        <div class="point" id="p4">
+          <b>Database</b> (Penyimpanan Data)
+          <ul><li>SQL & NoSQL: MySQL, PostgreSQL, Oracle, MongoDB, Firebase</li></ul>
+        </div>
+        <div class="point" id="p5">
+          <b>Tabel Ringkasan Bahasa & Framework Populer:</b>
+          <table class="table table-bordered table-sm mt-2">
+            <thead>
+              <tr><th>Bidang</th><th>Bahasa</th><th>Framework / Tools Populer</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Frontend</td><td>HTML, CSS, JS, Dart, Swift</td><td>Bootstrap, Tailwind, React, Vue, Flutter</td></tr>
+              <tr><td>Backend</td><td>Node.js, Python, Go, n8n</td><td>Express, Django, FastAPI, Fiber, n8n</td></tr>
+              <tr><td>Database</td><td>MySQL, PostgreSQL, Oracle, MongoDB, Firebase</td><td>phpMyAdmin, pgAdmin, Atlas, Firebase Console</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="point" id="p6">
+          <b>Kata Kunci:</b>
+          <ul><li>Frontend = UI</li><li>Backend = Logic</li><li>Database = Data</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button id="backBtn" class="btn btn-scroll"><i class="bi bi-arrow-left-circle"></i> Back</button>
+      <button id="nextBtn" class="btn btn-scroll">Next <i class="bi bi-arrow-right-circle"></i></button>
+    </div>
+  </div>
+</div>
+
+<footer>Universitas Nusa Mandiri — Workshop n8n</footer>
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <h5 id="modalTitle"></h5>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let step=1,total=6;
+function render(){
+  $('.point').removeClass('active');
+  $('#p'+step).addClass('active');
+  $('#prog').text(step+' / '+total);
+  $('.lang-icon').removeClass('show');
+
+  if(step===1) $('#html,#css,#js').addClass('show');
+  if(step===2) $('#html,#css,#js,#dart,#swift').addClass('show');
+  if(step===3) $('#node,#python,#go,#n8n').addClass('show');
+  if(step===4) $('#mysql,#postgres,#mongodb,#firebase,#oracle').addClass('show');
+  if(step>=5) $('.lang-icon').addClass('show');
+}
+$('#nextBtn').on('click',()=>{ if(step<total){step++;render();} else {window.location.href='slide4.html';}});
+$('#backBtn').on('click',()=>{ if(step>1){step--;render();} else {window.location.href='slide2.html';}});
+$('#panelBtn').on('click',()=> $('#panelContainer').fadeToggle(300));
+
+const info = {
+  html: ["HTML","Bahasa markup untuk struktur web.<br><b>Framework:</b> Bootstrap, Tailwind."],
+  css: ["CSS","Bahasa styling untuk tampilan UI.<br><b>Framework:</b> Bootstrap, Bulma, Tailwind."],
+  js: ["JavaScript","Bahasa interaktif browser.<br><b>Framework:</b> React, Vue, Next.js."],
+  dart: ["Dart","Bahasa UI modern (Flutter)."],
+  swift: ["Swift","Bahasa native iOS.<br><b>Framework:</b> SwiftUI, UIKit."],
+  node: ["Node.js","JavaScript di sisi server.<br><b>Framework:</b> Express.js, NestJS."],
+  python: ["Python","Serbaguna untuk web, AI, data.<br><b>Framework:</b> Django, Flask, FastAPI."],
+  go: ["Go","Bahasa ringan & cepat.<br><b>Framework:</b> Fiber, Echo, Gin."],
+  n8n: ["n8n","No-code backend automation.<br>Integrasi Telegram, GeminiAPI, Google Sheets."],
+  mysql: ["MySQL","Relational DB populer.<br><b>Tool:</b> phpMyAdmin."],
+  postgres: ["PostgreSQL","DB open-source kuat.<br><b>Tool:</b> pgAdmin."],
+  mongodb: ["MongoDB","NoSQL document-based DB.<br><b>Tool:</b> MongoDB Atlas."],
+  firebase: ["Firebase","Cloud NoSQL realtime DB.<br><b>Tool:</b> Firebase Console."],
+  oracle: ["Oracle","Enterprise DB untuk bisnis besar."]
+};
+$('.lang-icon').on('click',function(){
+  let id=$(this).attr('id');
+  if(info[id]){
+    $('#modalTitle').text(info[id][0]);
+    $('#modalBody').html(info[id][1]);
+    new bootstrap.Modal(document.getElementById('infoModal')).show();
+  }
+});
+render();
+</script>
+</body>
+</html>
