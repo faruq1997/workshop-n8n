@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Konversi Link Google Drive</title>
+  <title>Konversi Link Google Drive Lengkap</title>
 
-  <!-- Bootstrap 5 CDN -->
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -15,10 +15,10 @@
   <style>
     body {
       background-color: #f8f9fa;
-      padding-top: 80px;
+      padding-top: 70px;
     }
     .card {
-      max-width: 720px;
+      max-width: 780px;
       margin: auto;
     }
     #resultLink {
@@ -30,15 +30,37 @@
   <div class="container">
     <div class="card shadow-sm">
       <div class="card-body">
-        <h4 class="card-title mb-4 text-center fw-bold">Konversi Link Google Drive</h4>
+        <h4 class="text-center fw-bold mb-4">Konversi Link Google Drive Otomatis</h4>
         
-        <!-- Input URL -->
+        <!-- Input -->
         <div class="mb-3">
           <label for="gdriveInput" class="form-label">Masukkan Link Google Drive:</label>
           <input type="text" id="gdriveInput" class="form-control" placeholder="https://drive.google.com/file/d/.../view?usp=sharing">
         </div>
 
-        <!-- Hasil Konversi -->
+        <!-- Jenis file -->
+        <div class="mb-3">
+          <label class="form-label">Tipe File Terdeteksi:</label>
+          <input type="text" id="detectedType" class="form-control" readonly placeholder="Menunggu input...">
+        </div>
+
+        <!-- Pilihan tipe konversi -->
+        <div class="mb-3">
+          <label for="linkType" class="form-label">Pilih Jenis Konversi:</label>
+          <select id="linkType" class="form-select">
+            <option value="embed" selected>Embed Preview (aman di iframe)</option>
+            <option value="inline">Inline / Direct (uc?id=...)</option>
+            <option value="download">Download Langsung (uc?export=download&id=...)</option>
+            <option value="preview">Preview UI Google (/file/d/.../preview)</option>
+            <option value="exportpdf">Export ke PDF (Docs, Sheets, Slides)</option>
+            <option value="exportcsv">Export ke CSV (untuk Sheets)</option>
+            <option value="exportpptx">Export ke PPTX (untuk Slides)</option>
+            <option value="legacy">Legacy Open (/open?id=...)</option>
+            <option value="api">API Endpoint (/drive/v3/files/...)</option>
+          </select>
+        </div>
+
+        <!-- Hasil -->
         <div class="mb-3">
           <label class="form-label">Hasil Konversi:</label>
           <div class="input-group">
@@ -49,12 +71,18 @@
           </div>
         </div>
 
-        <!-- Preview Alternative -->
+        <!-- Preview -->
         <div id="previewSection" class="text-center mt-4 d-none">
-          <h6 class="fw-semibold mb-3">File Siap Dibuka:</h6>
-          <a id="openFileBtn" href="#" target="_blank" class="btn btn-success">
-            <i class="bi bi-box-arrow-up-right"></i> Buka File di Tab Baru
-          </a>
+          <h6 class="fw-semibold mb-3">Preview File:</h6>
+          <iframe id="previewFrame" width="100%" height="420px" class="border rounded"></iframe>
+          <p class="text-muted mt-2 small">Preview hanya tersedia untuk tipe Embed / Preview UI.</p>
+        </div>
+
+        <!-- Pesan CSP -->
+        <div id="blockedSection" class="alert alert-warning mt-4 d-none">
+          <i class="bi bi-exclamation-triangle"></i> 
+          Preview tidak dapat ditampilkan langsung karena pembatasan keamanan Google Drive (CSP). 
+          Gunakan tombol <strong>Copy</strong> atau buka link secara langsung.
         </div>
       </div>
     </div>
@@ -62,27 +90,87 @@
 
   <script>
     $(document).ready(function() {
+      const $input = $('#gdriveInput');
+      const $result = $('#resultLink');
+      const $preview = $('#previewFrame');
+      const $previewSection = $('#previewSection');
+      const $blocked = $('#blockedSection');
+      const $detected = $('#detectedType');
 
-      $('#gdriveInput').on('input', function() {
-        const inputVal = $(this).val().trim();
-        const regex = /https:\/\/drive\.google\.com\/file\/d\/([^\/]+)\//;
-        const match = inputVal.match(regex);
+      function detectType(url) {
+        if (/docs\.google\.com\/document/.test(url)) return 'Google Docs';
+        if (/docs\.google\.com\/spreadsheets/.test(url)) return 'Google Sheets';
+        if (/docs\.google\.com\/presentation/.test(url)) return 'Google Slides';
+        if (/drive\.google\.com\/file/.test(url)) return 'File Upload (Generic)';
+        if (/drive\.google\.com\/open/.test(url)) return 'Legacy File';
+        return 'Tidak dikenali';
+      }
+
+      function generateLink(fileId, baseType, convType) {
+        switch (convType) {
+          case 'embed':
+          case 'preview':
+            return `https://drive.google.com/file/d/${fileId}/preview`;
+          case 'inline':
+            return `https://drive.google.com/uc?id=${fileId}`;
+          case 'download':
+            return `https://drive.google.com/uc?export=download&id=${fileId}`;
+          case 'exportpdf':
+            if (baseType === 'Google Docs') return `https://docs.google.com/document/d/${fileId}/export?format=pdf`;
+            if (baseType === 'Google Sheets') return `https://docs.google.com/spreadsheets/d/${fileId}/export?format=pdf`;
+            if (baseType === 'Google Slides') return `https://docs.google.com/presentation/d/${fileId}/export/pdf`;
+            return `https://drive.google.com/uc?export=download&id=${fileId}`;
+          case 'exportcsv':
+            return `https://docs.google.com/spreadsheets/d/${fileId}/export?format=csv&id=${fileId}`;
+          case 'exportpptx':
+            return `https://docs.google.com/presentation/d/${fileId}/export/pptx`;
+          case 'legacy':
+            return `https://drive.google.com/open?id=${fileId}`;
+          case 'api':
+            return `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=YOUR_API_KEY`;
+          default:
+            return '';
+        }
+      }
+
+      function updateOutput() {
+        const url = $input.val().trim();
+        const type = $('#linkType').val();
+        const detected = detectType(url);
+        $detected.val(detected);
+
+        const regexFile = /https:\/\/drive\.google\.com\/file\/d\/([^\/]+)\//;
+        const regexDocs = /https:\/\/docs\.google\.com\/(?:document|spreadsheets|presentation)\/d\/([^\/]+)\//;
+        const match = url.match(regexFile) || url.match(regexDocs);
 
         if (match && match[1]) {
           const fileId = match[1];
-          const directLink = `https://drive.google.com/uc?id=${fileId}`;
-          $('#resultLink').val(directLink);
-          $('#previewSection').removeClass('d-none');
-          $('#openFileBtn').attr('href', directLink);
-        } else {
-          $('#resultLink').val('');
-          $('#previewSection').addClass('d-none');
-          $('#openFileBtn').attr('href', '#');
-        }
-      });
+          const newLink = generateLink(fileId, detected, type);
+          $result.val(newLink);
 
+          if (['embed', 'preview'].includes(type)) {
+            $preview.attr('src', newLink);
+            $previewSection.removeClass('d-none');
+            $blocked.addClass('d-none');
+          } else {
+            $previewSection.addClass('d-none');
+            $blocked.removeClass('d-none');
+          }
+        } else {
+          $result.val('');
+          $detected.val('Tidak dikenali');
+          $previewSection.addClass('d-none');
+          $blocked.addClass('d-none');
+        }
+      }
+
+      // Event
+      $input.on('input', updateOutput);
+      $('#linkType').on('change', updateOutput);
+
+      // Tombol Copy
       $('#copyBtn').on('click', function() {
-        const link = $('#resultLink').val();
+        const link = $result.val();
         if (link) {
           navigator.clipboard.writeText(link).then(() => {
             $(this).text('Copied!').removeClass('btn-outline-primary').addClass('btn-success');
@@ -92,7 +180,6 @@
           });
         }
       });
-
     });
   </script>
 </body>
