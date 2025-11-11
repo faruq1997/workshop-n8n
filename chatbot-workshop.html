@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoRujuk Chatbot v2</title>
+
+    <style>
+        /* Import Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        /* Variabel Warna */
+        :root {
+            --primary-color: #009688; /* Hijau Teal Modern */
+            --user-bubble-color: #E0F2F1; /* Hijau Sangat Muda */
+            --bot-bubble-color: #FFFFFF;
+            --bg-color: #F4F7F9;
+            --text-dark: #212121;
+            --text-light: #555;
+            --border-color: #E0E0E0;
+        }
+
+        /* Reset Dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        /* Kontainer Chat Utama */
+        .chat-container {
+            width: 100%;
+            max-width: 700px;
+            height: 90vh;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .chat-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header .icon {
+            font-size: 1.8rem;
+        }
+
+        .chat-header .info h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .chat-header .info p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* Kotak Chat (Area Pesan) */
+        .chat-box {
+            flex-grow: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* Animasi pesan muncul */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Styling Pesan Individual */
+        .message {
+            padding: 0.75rem 1.25rem;
+            border-radius: 20px;
+            max-width: 75%;
+            line-height: 1.5;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .bot-message {
+            background-color: var(--bot-bubble-color);
+            color: var(--text-dark);
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .user-message {
+            background-color: var(--user-bubble-color);
+            color: var(--text-dark);
+            border-bottom-right-radius: 5px;
+            align-self: flex-end;
+        }
+        
+        /* Indikator Mengetik (Typing Indicator) */
+        .typing-indicator {
+            display: none; /* Sembunyi secara default */
+            align-self: flex-start;
+            padding: 0.75rem 1.25rem;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #B0BEC5;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite both;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
+
+        /* Form Input */
+        .chat-form-container {
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+            background: #fff;
+        }
+
+        .chat-form {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chat-form input[type="text"] {
+            flex-grow: 1;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            border-radius: 25px;
+            padding: 0.8rem 1.2rem;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .chat-form input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 150, 136, 0.1);
+        }
+
+        .chat-form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-form button:hover {
+            background-color: #00796B;
+        }
+        .chat-form button:active {
+            transform: scale(0.95);
+        }
+        
+        .chat-form button:disabled {
+            background-color: #B0BEC5;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <header class="chat-header">
+            <span class="icon">🩺</span>
+            <div class="info">
+                <h1>GoRujuk Bot</h1>
+                <p>Online • Siap membantu keluhan Anda</p>
+            </div>
+        </header>
+
+        <main id="chat-box" class="chat-box">
+            <div class="message bot-message">
+                Halo! Saya GoRujuk Bot. Apa yang Anda rasakan hari ini?
+            </div>
+            
+            <div id="typing-indicator" class="message bot-message typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
+        </main>
+
+        <footer class="chat-form-container">
+            <form id="chat-form" class="chat-form">
+                <input type="text" id="user-input" placeholder="Ketik pesan Anda..." autocomplete="off">
+                <button type="submit" id="send-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="white">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                </button>
+            </form>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Ambil elemen-elemen DOM
+            const chatBox = document.getElementById("chat-box");
+            const chatForm = document.getElementById("chat-form");
+            const userInput = document.getElementById("user-input");
+            const sendButton = document.getElementById("send-button");
+            const typingIndicator = document.getElementById("typing-indicator");
+
+            // --- PERUBAHAN KRUSIAL 1: URL Webhook Baru ---
+            const webhookURL = "https://n8n-agcxrdyckty6.batok.sumopod.my.id/webhook/chatbotlatihan";
+
+            // Fungsi untuk menonaktifkan tombol kirim saat input kosong
+            function validateInput() {
+                sendButton.disabled = userInput.value.trim() === "";
+            }
+            userInput.addEventListener("input", validateInput);
+            validateInput(); // Panggil saat load awal
+
+            // Event listener untuk form submit
+            chatForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                const userMessageText = userInput.value.trim();
+
+                if (userMessageText) {
+                    addMessageToChatBox(userMessageText, "user");
+                    sendMessageToBot(userMessageText);
+                    userInput.value = "";
+                    validateInput();
+                }
+            });
+
+            /**
+             * Menampilkan pesan di chat box
+             */
+            function addMessageToChatBox(text, sender) {
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message", `${sender}-message`);
+                messageElement.textContent = text;
+                
+                // Masukkan sebelum indikator mengetik
+                chatBox.insertBefore(messageElement, typingIndicator);
+                
+                // Auto-scroll
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            /**
+             * Menampilkan/menyembunyikan indikator mengetik
+             */
+            function showTypingIndicator(show) {
+                typingIndicator.style.display = show ? "block" : "none";
+                if (show) {
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            }
+
+            /**
+             * Mengirim pesan ke n8n dan menerima respons
+             */
+            async function sendMessageToBot(text) {
+                // Nonaktifkan input & tampilkan indikator mengetik (UX Feedback)
+                sendButton.disabled = true;
+                userInput.disabled = true;
+                showTypingIndicator(true);
+
+                try {
+                    const response = await fetch(webhookURL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        // Struktur body masih sama: {"pertanyaan": ...}
+                        // Sesuaikan jika n8n Anda mengharapkan yg lain
+                        body: JSON.stringify({ 
+                            "pertanyaan": text 
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    // --- PERUBAHAN KRUSIAL 2: Membaca format JSON balasan ---
+                    // Format baru Anda: [ { "output": "..." } ]
+                    // Kita ambil teks dari 'output' di objek pertama dalam array
+                    
+                    let botReply;
+                    if (Array.isArray(data) && data.length > 0 && data[0].output) {
+                        botReply = data[0].output;
+                    } else {
+                        // Fallback jika format balasan tidak terduga
+                        console.warn("Format data tidak terduga:", data);
+                        botReply = "Maaf, saya tidak mengerti balasan dari bot.";
+                    }
+
+                    addMessageToChatBox(botReply, "bot");
+
+                } catch (error) {
+                    console.error("Error mengirim pesan ke bot:", error);
+                    addMessageToChatBox("Maaf, terjadi masalah koneksi atau format balasan salah. Coba lagi nanti.", "bot");
+                } finally {
+                    // Apapun yang terjadi (sukses/gagal),
+                    // Sembunyikan indikator & aktifkan lagi inputnya
+                    showTypingIndicator(false);
+                    userInput.disabled = false;
+                    validateInput(); // Cek apakah input (mungkin sudah diisi lagi)
+                }
+            }
+        });
+    </script>
+</body>
+</html>
