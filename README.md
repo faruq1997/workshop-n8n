@@ -55,7 +55,7 @@ untuk mencairkan suasana sebelum memulai materi.
 1. Clone repositori:
    ```bash
    git clone https://github.com/faruq1997/workshop-n8n.git
-````
+   ```
 
 2. Masuk ke folder:
 
