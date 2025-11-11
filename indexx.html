@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Workshop n8n — Universitas Nusa Mandiri</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root {
+  --n8n-primary: #FF6F61;
+  --n8n-secondary: #FFB6A3;
+  --n8n-bg: #FFF6F2;
+}
+body {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, var(--n8n-bg) 0%, #ffffff 100%);
+  color: #2c1d12;
+  overflow-x: hidden;
+}
+header {
+  text-align: center;
+  padding: 50px 20px 20px;
+}
+header h1 {
+  font-weight: 700;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  color: var(--n8n-primary);
+}
+header p {
+  font-size: 1rem;
+}
+a.link {
+  color: var(--n8n-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+a.link:hover { text-decoration: underline; }
+#game-area {
+  position: relative;
+  width: 100%;
+  max-width: 550px;
+  height: 200px;
+  border: 2px dashed var(--n8n-secondary);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fffdf9, #ffeae4);
+  overflow: hidden;
+  margin: 20px auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+#logo-n8n {
+  position: absolute;
+  width: 60px;
+  transition: transform .15s;
+  cursor: pointer;
+}
+#logo-n8n:active { transform: scale(0.9); }
+#score-box {
+  text-align:center;
+  font-weight:600;
+  color: var(--n8n-primary);
+  margin-top:8px;
+}
+.slide-card {
+  background: #fff;
+  border: 2px solid #ffd4c9;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 20px;
+  transition: all .25s ease-in-out;
+}
+.slide-card i {
+  font-size: 2rem;
+  color: var(--n8n-primary);
+}
+.slide-card:hover {
+  transform: scale(1.05);
+  background: linear-gradient(180deg, #fff, #fff6f3);
+}
+footer {
+  text-align:center;
+  padding:10px;
+  margin-top:30px;
+  background: rgba(255,255,255,0.8);
+  border-top:2px solid #ffd4c9;
+  color: #4b3917;
+  font-size: 0.9rem;
+}
+@keyframes bubble {
+  0% {transform:translateY(100vh) scale(0.3);opacity:0;}
+  50% {opacity:0.8;}
+  100% {transform:translateY(-10vh) scale(1);opacity:0;}
+}
+.bubble {
+  position:absolute;
+  bottom:0;
+  background:rgba(255,111,97,0.3);
+  border-radius:50%;
+  animation:bubble 12s infinite ease-in;
+}
+@media (max-width: 768px) {
+  #game-area { height: 150px; }
+  #logo-n8n { width: 50px; }
+  .slide-card { padding: 15px; font-size: 0.9rem; }
+  .slide-card i { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="https://faruq1997.github.io/icitri2022/logo-unm.webp" width="80" alt="Logo UNM" class="mb-2">
+  <h1><i class="bi bi-diagram-3"></i> Workshop n8n — Backend Automation</h1>
+  <p>oleh <b>Faruq Aziz</b> — Universitas Nusa Mandiri<br>Dosen Sistem Informasi</p>
+  <p>
+    📧 <a href="mailto:faruq.fqs@nusamandiri.ac.id" class="link">faruq.fqs@nusamandiri.ac.id</a><br>
+    🎓 <a href="https://scholar.google.com/citations?user=EODPL14AAAAJ&hl=id&oi=ao" class="link" target="_blank">Google Scholar</a>
+  </p>
+</header>
+
+<div class="container text-center">
+  <h4 class="fw-bold mb-3 text-danger"><i class="bi bi-controller"></i> Mini Game: Tangkap Logo n8n!</h4>
+  <div id="game-area">
+    <img id="logo-n8n" src="https://avatars.githubusercontent.com/u/45487711?s=200&v=4" alt="n8n">
+  </div>
+  <div id="score-box">Skor: <span id="score">0</span></div>
+
+  <h4 class="fw-bold mt-4 text-danger">🎬 Mulai Workshop</h4>
+  <div class="row justify-content-center g-3 mt-2">
+    <div class="col-6 col-md-3"><a href="slide1.html" class="text-decoration-none"><div class="slide-card"><i class="bi bi-people"></i><br>Slide 1<br><small>Konvensional & Fullstack</small></div></a></div>
+    <div class="col-6 col-md-3"><a href="slide2.html" class="text-decoration-none"><div class="slide-card"><i class="bi bi-building"></i><br>Slide 2<br><small>Startup & Tim Dev</small></div></a></div>
+    <div class="col-6 col-md-3"><a href="slide3.html" class="text-decoration-none"><div class="slide-card"><i class="bi bi-code-square"></i><br>Slide 3<br><small>Bahasa & Database</small></div></a></div>
+    <div class="col-6 col-md-3"><a href="slide4.html" class="text-decoration-none"><div class="slide-card"><i class="bi bi-question-circle"></i><br>Slide 4<br><small>Kuis Interaktif</small></div></a></div>
+    <div class="col-6 col-md-3"><a href="slide5.html" class="text-decoration-none"><div class="slide-card"><i class="bi bi-diagram-3"></i><br>Slide 5<br><small>n8n & Tools Setup</small></div></a></div>
+  </div>
+</div>
+
+<footer>
+  © 2025 Universitas Nusa Mandiri — Workshop n8n | Designed by Faruq Aziz
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+let score = 0;
+const logo = document.getElementById('logo-n8n');
+const area = document.getElementById('game-area');
+
+// Random gerak logo
+function moveLogo(){
+  const x = Math.random() * (area.clientWidth - 70);
+  const y = Math.random() * (area.clientHeight - 70);
+  logo.style.left = x + 'px';
+  logo.style.top = y + 'px';
+}
+setInterval(moveLogo, 1100);
+
+// Klik nambah skor
+logo.onclick = () => {
+  score++;
+  document.getElementById('score').innerText = score;
+  logo.style.transform = "scale(0.9)";
+  setTimeout(()=>logo.style.transform="scale(1)",150);
+  moveLogo();
+};
+
+// Animasi bubble
+function spawnBubbles(){
+  for(let i=0;i<8;i++){
+    const b=document.createElement('div');
+    b.className='bubble';
+    const size=Math.random()*30+10;
+    b.style.width=b.style.height=size+'px';
+    b.style.left=Math.random()*100+'%';
+    b.style.animationDuration=10+Math.random()*10+'s';
+    document.body.appendChild(b);
+    setTimeout(()=>b.remove(),20000);
+  }
+}
+setInterval(spawnBubbles,2000);
+</script>
+</body>
+</html>
