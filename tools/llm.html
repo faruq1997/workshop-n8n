@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Materi LLM: GPT, Claude, DeepSeek, Groq, LLaMA, Gemini, Qwen + RAG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    :root{
+      --bg:#0b0f16; --fg:#e6e9ef; --card:#111827; --card-border:#1f2937;
+      --muted:#94a3b8; --accent:#5eead4; --accent2:#93c5fd; --line:#334155;
+    }
+    body.dark-mode { background-color: var(--bg); color: var(--fg); }
+    body.light-mode {
+      --bg:#f8fafc; --fg:#0f172a; --card:#ffffff; --card-border:#cbd5e1;
+      --muted:#475569; --accent:#06b6d4; --accent2:#2563eb; --line:#94a3b8;
+      background-color: var(--bg); color: var(--fg);
+    }
+    .card{ background:var(--card); border:1px solid var(--card-border); }
+    .toggle-btn{ position:fixed; top:1rem; right:1rem; z-index:1000; }
+    .badge-pill{
+      border:1px solid var(--line); background:transparent; color:var(--fg);
+      border-radius:999px; padding:.35rem .6rem; font-weight:500;
+      cursor:help;
+    }
+    .section-title{ border-left:4px solid var(--accent); padding-left:.6rem; }
+    .muted{ color:var(--muted); }
+    /* SVG styles follow currentColor so it adapts to theme */
+    svg.rag-diagram text{ fill: currentColor; font-family: "Segoe UI", system-ui, sans-serif; font-size:12px;}
+    svg.rag-diagram .box{ fill:transparent; stroke: var(--accent2); stroke-width:2; rx:10; ry:10; }
+    svg.rag-diagram .box-soft{ fill:transparent; stroke: var(--line); stroke-dasharray:4 4; rx:10; ry:10; }
+    svg.rag-diagram .arrow{ stroke: var(--accent); stroke-width:2; marker-end: url(#arrowHead); }
+    svg.rag-diagram .arrow-soft{ stroke: var(--line); stroke-width:1.5; marker-end: url(#arrowHeadSoft); }
+    svg.rag-diagram .lane-title{ font-weight:700; }
+    .table thead{ background:rgba(255,255,255,.06); }
+  </style>
+</head>
+
+<body class="dark-mode">
+  <button id="toggleTheme" class="btn btn-outline-light toggle-btn">🌙 Dark Mode</button>
+
+  <div class="container py-5">
+    <h1 class="fw-bold mb-2">Materi LLM Modern</h1>
+    <p class="lead muted mb-5">
+      Ringkas, praktis, dan siap ajar: model GPT, Claude, DeepSeek, Groq (platform), LLaMA, Gemini, Qwen.
+      Termasuk RAG, embedding, serta diagram arsitektur interaktif (tooltip).
+    </p>
+
+    <!-- Ringkasan Model -->
+    <section class="mb-5">
+      <h2 class="h4 fw-bold mb-3 section-title">Ringkasan Model LLM</h2>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Penyedia</th>
+              <th>Kelebihan</th>
+              <th>Use Case Utama</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>GPT (4o, mini)</td>
+              <td>OpenAI</td>
+              <td>Multimodal (teks, gambar, suara), stabil untuk produk</td>
+              <td>Chat asisten, analisis dokumen, agen</td>
+            </tr>
+            <tr>
+              <td>Claude (3.x)</td>
+              <td>Anthropic</td>
+              <td>Kuat di dokumen panjang dan reasoning</td>
+              <td>Analisis PDF/kontrak, penulisan terstruktur</td>
+            </tr>
+            <tr>
+              <td>DeepSeek (R1/V2)</td>
+              <td>DeepSeek</td>
+              <td>Efisien biaya, reasoning kuat (distilled)</td>
+              <td>Coding assistant, analisis logika</td>
+            </tr>
+            <tr>
+              <td>Groq</td>
+              <td>Groq Inc.</td>
+              <td>Platform inferensi ultra-cepat (bukan model)</td>
+              <td>Serving LLaMA/Qwen/Whisper berlatensi rendah</td>
+            </tr>
+            <tr>
+              <td>LLaMA (3.x)</td>
+              <td>Meta</td>
+              <td>Open-source, mudah self-host</td>
+              <td>On-prem, private AI, penelitian</td>
+            </tr>
+            <tr>
+              <td>Gemini (1.5/2.x)</td>
+              <td>Google</td>
+              <td>Multimodal dokumen-gambar-video-audio</td>
+              <td>Analisis multimodal dan konteks panjang</td>
+            </tr>
+            <tr>
+              <td>Qwen (2.5 / VL / Audio)</td>
+              <td>Alibaba</td>
+              <td>Open-source kuat, multibahasa, varian vision/audio</td>
+              <td>Aplikasi ekonomis, penelitian, edge</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Rekomendasi Modalitas -->
+    <section class="mb-5">
+      <h2 class="h4 fw-bold mb-3 section-title">Rekomendasi Berdasarkan Jenis Data</h2>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card p-3">
+            <h5 class="mb-1">Teks</h5>
+            <div class="muted">GPT 4o / Claude 3 untuk kualitas; LLaMA/Qwen untuk self-host.</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3">
+            <h5 class="mb-1">Gambar</h5>
+            <div class="muted">GPT 4o Vision / Gemini; Qwen-VL sebagai opsi open-source.</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3">
+            <h5 class="mb-1">Video</h5>
+            <div class="muted">Gemini (konteks panjang + transkrip + keyframe sampling).</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card p-3">
+            <h5 class="mb-1">Suara</h5>
+            <div class="muted">Whisper / GPT 4o audio; Groq untuk ASR berlatensi rendah.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RAG with tooltips -->
+    <section class="mb-4">
+      <h2 class="h4 fw-bold mb-3 section-title">RAG (Retrieval-Augmented Generation)</h2>
+      <p class="muted mb-3">
+        Inti RAG: “tanya → cari bukti → susun jawaban berbasis bukti.” Tooltip di bawah menjelaskan tiap komponen dengan analogi sederhana.
+      </p>
+
+      <div class="card p-3 mb-4">
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Ingest: ambil dokumen dari sumber (PDF/HTML/DB). Embedding: ubah tiap potongan dokumen jadi angka (vektor) yang mewakili makna. Analogi: bikin 'sidik jari makna' untuk setiap paragraf.">Ingest + Embedding</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Potong dokumen panjang jadi chunk 300–800 token; ETL: bersih/normalisasi sebelum disimpan. Analogi: ringkasan per bab.">Chunking, ETL</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Database khusus untuk menyimpan vektor embedding. Analogi: lemari arsip berisi kartu indeks makna.">Vector DB</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Cara mencari tetangga terdekat di ruang vektor dengan cepat: HNSW (graph), IVF (clustering), PQ (kompresi). Analogi: peta jalan pintas ke halaman mirip.">HNSW, IVF, PQ</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Pertanyaan pengguna diubah jadi vektor juga, supaya kemiripannya bisa dihitung.">User Query</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Menulis ulang pertanyaan agar lebih jelas/spesifik. Analogi: asisten yang memperjelas maksudmu.">+ Rewriter</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Mesin pencari internal yang mengambil chunk paling relevan dari Vector DB.">Retriever</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Gabungkan pencarian keyword (BM25) + makna (Vector); hasilnya diurutkan ulang oleh re-ranker agar paling relevan di atas.">BM25 + Vector + Rerank</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="LLM menyusun jawaban berdasarkan bukti yang diambil. Analogi: menulis esai dengan membuka catatan.">Generator (LLM)</span>
+          <span class="badge-pill" data-bs-toggle="tooltip" data-bs-placement="top" title="Template berisi instruksi + potongan bukti (context) yang dimasukkan ke LLM agar jawabannya akurat dan punya kutipan.">Prompt + Context</span>
+        </div>
+      </div>
+
+      <!-- Complex SVG Diagram -->
+      <div class="card p-3">
+        <div class="mb-2 fw-semibold">Arsitektur RAG — Offline Pipeline (atas) & Online Query (bawah)</div>
+        <div class="text-center">
+          <svg class="rag-diagram" viewBox="0 0 1100 620" width="100%" height="auto" role="img" aria-label="Diagram arsitektur RAG">
+            <defs>
+              <marker id="arrowHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0,0 L10,5 L0,10 Z" fill="currentColor"></path>
+              </marker>
+              <marker id="arrowHeadSoft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0,0 L10,5 L0,10 Z" fill="currentColor" opacity="0.55"></path>
+              </marker>
+            </defs>
+
+            <!-- Lane titles -->
+            <text class="lane-title" x="20" y="30">OFFLINE: Ingest → Embed → Index</text>
+            <text class="lane-title" x="20" y="325">ONLINE: Query → Retrieve → Generate</text>
+
+            <!-- OFFLINE LANE -->
+            <rect class="box" x="30" y="60"  width="180" height="70"></rect>
+            <text x="120" y="95">Sources</text>
+            <text x="120" y="112" class="muted">PDF, HTML, DB</text>
+
+            <rect class="box" x="250" y="60" width="210" height="70"></rect>
+            <text x="355" y="95">Chunking & ETL</text>
+            <text x="355" y="112" class="muted">clean, split, normalize</text>
+
+            <rect class="box" x="500" y="60" width="210" height="70"></rect>
+            <text x="605" y="95">Embedding</text>
+            <text x="605" y="112" class="muted">text → vector</text>
+
+            <rect class="box" x="750" y="60" width="300" height="70"></rect>
+            <text x="900" y="90">Vector DB</text>
+            <text x="900" y="110" class="muted">HNSW / IVF / PQ</text>
+
+            <line class="arrow" x1="210" y1="95" x2="250" y2="95"></line>
+            <line class="arrow" x1="460" y1="95" x2="500" y2="95"></line>
+            <line class="arrow" x1="710" y1="95" x2="750" y2="95"></line>
+
+            <!-- ONLINE LANE -->
+            <rect class="box" x="30"  y="360" width="220" height="70"></rect>
+            <text x="140" y="395">User Query</text>
+            <text x="140" y="412" class="muted">q (text) → vector</text>
+
+            <rect class="box" x="290" y="360" width="210" height="70"></rect>
+            <text x="395" y="395">Query Rewriter</text>
+            <text x="395" y="412" class="muted">clarify, expand</text>
+
+            <rect class="box" x="530" y="360" width="230" height="70"></rect>
+            <text x="645" y="395">Hybrid Retriever</text>
+            <text x="645" y="412" class="muted">BM25 + Vector</text>
+
+            <rect class="box" x="800" y="360" width="250" height="70"></rect>
+            <text x="925" y="395">Re-ranker</text>
+            <text x="925" y="412" class="muted">cross-encoder</text>
+
+            <line class="arrow" x1="250" y1="395" x2="290" y2="395"></line>
+            <line class="arrow" x1="500" y1="395" x2="530" y2="395"></line>
+            <line class="arrow" x1="760" y1="395" x2="800" y2="395"></line>
+
+            <!-- Context Builder & LLM -->
+            <rect class="box" x="30"  y="470" width="350" height="70"></rect>
+            <text x="205" y="505">Prompt + Context Builder</text>
+            <text x="205" y="522" class="muted">instructions + top-k passages + citations</text>
+
+            <rect class="box" x="410" y="470" width="280" height="70"></rect>
+            <text x="550" y="505">Generator (LLM)</text>
+            <text x="550" y="522" class="muted">GPT/Claude/Gemini/LLaMA/Qwen</text>
+
+            <rect class="box" x="720" y="470" width="330" height="70"></rect>
+            <text x="885" y="505">Answer + Evidence</text>
+            <text x="885" y="522" class="muted">final text + citations</text>
+
+            <line class="arrow" x1="380" y1="505" x2="410" y2="505"></line>
+            <line class="arrow" x1="690" y1="505" x2="720" y2="505"></line>
+
+            <!-- Cross-lane connections -->
+            <line class="arrow" x1="645" y1="360" x2="900" y2="130"></line>
+            <text x="790" y="235" class="muted">ANN search</text>
+
+            <!-- Optional subsystems (soft boxes) -->
+            <rect class="box-soft" x="30"  y="160" width="300" height="60"></rect>
+            <text x="180" y="195">Scheduler & Ingestor</text>
+
+            <rect class="box-soft" x="360" y="160" width="300" height="60"></rect>
+            <text x="510" y="195">Eval & Quality Gates</text>
+
+            <rect class="box-soft" x="690" y="160" width="360" height="60"></rect>
+            <text x="870" y="195">Observability (latency, cost, recall)</text>
+
+            <rect class="box-soft" x="30"  y="560" width="320" height="40"></rect>
+            <text x="190" y="585">Cache (prompt/embedding/answer)</text>
+
+            <line class="arrow-soft" x1="550" y1="470" x2="190" y2="560"></line>
+            <line class="arrow-soft" x1="605" y1="130" x2="180" y2="560"></line>
+
+            <!-- Legend -->
+            <rect class="box-soft" x="820" y="560" width="230" height="40"></rect>
+            <text x="835" y="585">Legend:</text>
+            <text x="900" y="585">Solid = utama, Dashed = opsional</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Embedding -->
+    <section class="mb-5">
+      <h2 class="h4 fw-bold mb-3 section-title">Text Embedding & Dimensi</h2>
+      <div class="card p-3">
+        <p class="mb-2">
+          Embedding mengubah teks menjadi vektor angka sehingga “kedekatan makna” bisa diukur. 
+          Bayangkan peta kota: kalimat yang maknanya mirip akan “berdekatan” di peta vektor.
+        </p>
+        <ul class="mb-0">
+          <li><strong>Dimensi lazim:</strong> 384 · 512 · 768 · 1024 · 1536+</li>
+          <li><strong>Trade-off:</strong> dimensi naik → detail naik → memori & latensi juga naik</li>
+          <li><strong>Saran praktis:</strong> 768 untuk aplikasi umum; ≥1536 untuk presisi tinggi/korporat</li>
+          <li><strong>Indexing:</strong> gunakan HNSW/IVF; aktifkan PQ/INT8 untuk hemat memori</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Theme toggle
+    $("#toggleTheme").on("click", function () {
+      const body = $("body");
+      const dark = body.hasClass("dark-mode");
+      body.toggleClass("dark-mode light-mode");
+      $(this)
+        .text(dark ? "☀️ Light Mode" : "🌙 Dark Mode")
+        .toggleClass("btn-outline-light btn-outline-dark");
+    });
+
+    // Enable Bootstrap tooltips
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+      new bootstrap.Tooltip(el, { trigger: 'hover focus' });
+    });
+  </script>
+</body>
+</html>
