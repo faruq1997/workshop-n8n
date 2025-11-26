@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panduan Interaktif n8n</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #1a202c;
+      line-height: 1.6;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+    
+    .app-container {
+      width: 100%;
+      min-height: 100%;
+      padding: 2rem 1rem;
+    }
+    
+    .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .hero-section {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      text-align: center;
+    }
+    
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #667eea;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero-description {
+      font-size: 1.125rem;
+      color: #718096;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+    
+    .cta-button {
+      background: #667eea;
+      color: white;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .cta-button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+    
+    .tabs-container {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      margin-bottom: 2rem;
+    }
+    
+    .tabs-header {
+      display: flex;
+      background: #f7fafc;
+      border-bottom: 2px solid #e2e8f0;
+      overflow-x: auto;
+    }
+    
+    .tab-button {
+      flex: 1;
+      min-width: 150px;
+      padding: 1.25rem 1.5rem;
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #718096;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .tab-button:hover {
+      background: #edf2f7;
+      color: #4a5568;
+    }
+    
+    .tab-button.active {
+      color: #667eea;
+      background: white;
+    }
+    
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #667eea;
+    }
+    
+    .tab-content {
+      padding: 2.5rem;
+    }
+    
+    .tab-panel {
+      display: none;
+      animation: fadeIn 0.4s ease-in;
+    }
+    
+    .tab-panel.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 1.5rem;
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .feature-card {
+      background: #f7fafc;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border-left: 4px solid #667eea;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .feature-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-description {
+      color: #718096;
+      font-size: 0.95rem;
+    }
+    
+    .code-block {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 1.5rem;
+      border-radius: 12px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+    
+    .step-list {
+      list-style: none;
+      counter-reset: step-counter;
+    }
+    
+    .step-item {
+      counter-increment: step-counter;
+      background: #f7fafc;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      position: relative;
+      padding-left: 4rem;
+    }
+    
+    .step-item::before {
+      content: counter(step-counter);
+      position: absolute;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #667eea;
+      color: white;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+    
+    .use-case-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .use-case-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .use-case-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .use-case-description {
+      font-size: 1rem;
+      opacity: 0.95;
+    }
+    
+    .accordion-item {
+      background: #f7fafc;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .accordion-header {
+      width: 100%;
+      padding: 1.25rem 1.5rem;
+      background: white;
+      border: none;
+      text-align: left;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #2d3748;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    
+    .accordion-header:hover {
+      background: #edf2f7;
+    }
+    
+    .accordion-icon {
+      transition: transform 0.3s ease;
+      font-size: 1.5rem;
+      color: #667eea;
+    }
+    
+    .accordion-header.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+    
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    
+    .accordion-content.active {
+      max-height: 500px;
+    }
+    
+    .accordion-body {
+      padding: 1.5rem;
+      color: #4a5568;
+    }
+    
+    @media (max-width: 768px) {
+      .app-container {
+        padding: 1rem 0.5rem;
+      }
+      
+      .hero-section {
+        padding: 2rem 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.25rem;
+      }
+      
+      .hero-description {
+        font-size: 1rem;
+      }
+      
+      .tab-content {
+        padding: 1.5rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .tabs-header {
+        flex-wrap: nowrap;
+      }
+      
+      .tab-button {
+        font-size: 0.9rem;
+        padding: 1rem;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="app-container">
+   <div class="content-wrapper">
+    <header class="hero-section">
+     <h1 class="hero-title" id="main-title">Panduan n8n</h1>
+     <h2 class="hero-subtitle" id="subtitle">Platform Workflow Automation untuk Semua</h2>
+     <p class="hero-description" id="intro-text">n8n adalah platform otomasi workflow open-source yang powerful, memungkinkan Anda menghubungkan berbagai aplikasi dan layanan untuk mengotomatisasi tugas-tugas repetitif.</p><button class="cta-button" id="cta-button">Mulai Belajar</button>
+    </header>
+    <main class="tabs-container">
+     <nav class="tabs-header"><button class="tab-button active" data-tab="intro">Pengenalan</button> <button class="tab-button" data-tab="features">Fitur Utama</button> <button class="tab-button" data-tab="start">Cara Mulai</button> <button class="tab-button" data-tab="examples">Contoh Workflow</button> <button class="tab-button" data-tab="faq">FAQ</button>
+     </nav>
+     <div class="tab-content">
+      <article class="tab-panel active" id="intro">
+       <h2 class="section-title">Apa itu n8n?</h2>
+       <p style="margin-bottom: 1.5rem; color: #4a5568; font-size: 1.125rem;">n8n adalah platform otomasi workflow yang fair-code, artinya kode sumber terbuka dan dapat di-host sendiri. Dengan n8n, Anda dapat mengintegrasikan ratusan aplikasi dan layanan untuk membuat workflow otomatis yang menghemat waktu dan meningkatkan produktivitas.</p>
+       <div class="feature-grid">
+        <div class="feature-card">
+         <div class="feature-icon">
+          🔓
+         </div>
+         <h3 class="feature-title">Open Source</h3>
+         <p class="feature-description">Kode sumber terbuka dan dapat disesuaikan sesuai kebutuhan Anda</p>
+        </div>
+        <div class="feature-card">
+         <div class="feature-icon">
+          🖥️
+         </div>
+         <h3 class="feature-title">Self-Hosted</h3>
+         <p class="feature-description">Data Anda tetap di server Anda sendiri untuk privasi maksimal</p>
+        </div>
+        <div class="feature-card">
+         <div class="feature-icon">
+          🔌
+         </div>
+         <h3 class="feature-title">200+ Integrasi</h3>
+         <p class="feature-description">Koneksi dengan berbagai aplikasi populer siap pakai</p>
+        </div>
+       </div>
+      </article>
+      <article class="tab-panel" id="features">
+       <h2 class="section-title">Fitur-Fitur Unggulan</h2>
+       <div class="accordion-item"><button class="accordion-header"> <span>Visual Workflow Editor</span> <span class="accordion-icon">▼</span> </button>
+        <div class="accordion-content">
+         <div class="accordion-body">
+          Interface drag-and-drop yang intuitif memudahkan Anda membuat workflow kompleks tanpa perlu coding. Setiap node dapat dikonfigurasi dengan mudah dan workflow dapat di-visualisasikan secara real-time.
+         </div>
+        </div>
+       </div>
+       <div class="accordion-item"><button class="accordion-header"> <span>Custom Code Execution</span> <span class="accordion-icon">▼</span> </button>
+        <div class="accordion-content">
+         <div class="accordion-body">
+          Untuk kebutuhan yang lebih kompleks, Anda dapat menambahkan kode JavaScript atau Python langsung ke dalam workflow. Ini memberikan fleksibilitas penuh untuk manipulasi data dan logika bisnis yang spesifik.
+         </div>
+        </div>
+       </div>
+       <div class="accordion-item"><button class="accordion-header"> <span>Webhooks &amp; API</span> <span class="accordion-icon">▼</span> </button>
+        <div class="accordion-content">
+         <div class="accordion-body">
+          Trigger workflow dari aplikasi eksternal menggunakan webhooks atau expose workflow sebagai API endpoint. Sempurna untuk integrasi dengan sistem custom atau aplikasi web.
+         </div>
+        </div>
+       </div>
+       <div class="accordion-item"><button class="accordion-header"> <span>Error Handling</span> <span class="accordion-icon">▼</span> </button>
+        <div class="accordion-content">
+         <div class="accordion-body">
+          Sistem error handling yang robust dengan retry mechanism dan notification. Workflow dapat dikonfigurasi untuk mengirim alert ketika terjadi error atau retry otomatis pada kondisi tertentu.
+         </div>
+        </div>
+       </div>
+      </article>
+      <article class="tab-panel" id="start">
+       <h2 class="section-title">Memulai dengan n8n</h2>
+       <ul class="step-list">
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Instalasi</strong> <p style="margin-top: 0.5rem; color: #718096;">Install n8n menggunakan npm atau Docker. Untuk npm:</p>
+         <div class="code-block">
+          npm install n8n -g<br>
+          n8n start
+         </div></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Buat Workflow Pertama</strong> <p style="margin-top: 0.5rem; color: #718096;">Akses n8n di browser (default: localhost:5678), klik "New Workflow" dan mulai tambahkan nodes dari panel sebelah kiri.</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Tambahkan Trigger</strong> <p style="margin-top: 0.5rem; color: #718096;">Pilih trigger node seperti "Webhook", "Cron", atau "Manual Trigger" untuk menentukan kapan workflow akan berjalan.</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Koneksikan Nodes</strong> <p style="margin-top: 0.5rem; color: #718096;">Tambahkan nodes untuk action yang ingin dilakukan (misalnya: kirim email, simpan ke database, dll) dan hubungkan dengan trigger.</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Test &amp; Aktivasi</strong> <p style="margin-top: 0.5rem; color: #718096;">Klik "Execute Workflow" untuk test, lalu aktifkan workflow dengan toggle di kanan atas agar berjalan otomatis.</p></li>
+       </ul>
+      </article>
+      <article class="tab-panel" id="examples">
+       <h2 class="section-title">Contoh Use Case Populer</h2>
+       <div class="use-case-card">
+        <h3 class="use-case-title">📧 Email Automation</h3>
+        <p class="use-case-description">Kirim email otomatis berdasarkan trigger tertentu: welcome email untuk user baru, reminder untuk deadline, notifikasi untuk form submission, atau newsletter terjadwal.</p>
+       </div>
+       <div class="use-case-card">
+        <h3 class="use-case-title">💾 Data Sync</h3>
+        <p class="use-case-description">Sinkronisasi data antar platform: CRM ke spreadsheet, form responses ke database, atau backup otomatis data penting ke cloud storage.</p>
+       </div>
+       <div class="use-case-card">
+        <h3 class="use-case-title">📱 Social Media Automation</h3>
+        <p class="use-case-description">Post otomatis ke berbagai platform social media, monitor mentions atau keywords, atau aggregate content dari berbagai sumber.</p>
+       </div>
+       <div class="use-case-card">
+        <h3 class="use-case-title">🔔 Monitoring &amp; Alerts</h3>
+        <p class="use-case-description">Monitor website uptime, track API performance, atau kirim alert ketika metrics melewati threshold tertentu ke Slack, Discord, atau Telegram.</p>
+       </div>
+      </article>
+      <article class="tab-panel" id="faq">
+       <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+       <div class="accordion-item"><button class="accordion-header"> <span>Apakah n8n gratis?</span> <span class="accordion-icon">▼</span> </button>
+        <div class="accordion-content">
+         <div class="accordion-body">
+          Ya! n8n adalah open-source dan gratis untuk self-hosting. Mereka juga menawarkan cloud hosting berbayar untuk kemudahan jika Anda tidak ingin manage server sendiri.
+         </div>
+        </div>
+       </div>
+       <div class="accordion-item"><button class="accordion-header"> <span>Apakah perlu coding untuk menggunakan n8n?</span> <span class="accordion-icon">▼</span> </button>
+        <div class="accordion-content">
+         <div class="accordion-body">
+          Tidak wajib! Sebagian besar workflow dapat dibuat dengan drag-and-drop tanpa coding. Namun, pemahaman dasar tentang API dan data structure akan sangat membantu untuk use case yang lebih kompleks.
+         </div>
+        </div>
+       </div>
+       <div class="accordion-item"><button class="accordion-header"> <span>Bagaimana dengan keamanan data?</span> <span class="accordion-icon">▼</span> </button>
+        <div class="accordion-content">
+         <div class="accordion-body">
+          Karena self-hosted, semua data workflow dan credentials tersimpan di server Anda sendiri. n8n mengenkripsi credentials dan sensitive data untuk keamanan maksimal.
+         </div>
+        </div>
+       </div>
+       <div class="accordion-item"><button class="accordion-header"> <span>Berapa banyak workflow yang bisa dibuat?</span> <span class="accordion-icon">▼</span> </button>
+        <div class="accordion-content">
+         <div class="accordion-body">
+          Tidak ada batasan jumlah workflow pada self-hosted version. Anda bisa membuat sebanyak yang Anda butuhkan, terbatas hanya oleh resource server Anda.
+         </div>
+        </div>
+       </div>
+      </article>
+     </div>
+    </main>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "Panduan n8n",
+      subtitle: "Platform Workflow Automation untuk Semua",
+      intro_text: "n8n adalah platform otomasi workflow open-source yang powerful, memungkinkan Anda menghubungkan berbagai aplikasi dan layanan untuk mengotomatisasi tugas-tugas repetitif.",
+      cta_button: "Mulai Belajar",
+      background_color: "#667eea",
+      surface_color: "#ffffff",
+      text_color: "#2d3748",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#718096",
+      font_family: "Inter",
+      font_size: 16
+    };
+
+    async function onConfigChange(config) {
+      const mainTitle = document.getElementById('main-title');
+      const subtitle = document.getElementById('subtitle');
+      const introText = document.getElementById('intro-text');
+      const ctaButton = document.getElementById('cta-button');
+      
+      if (mainTitle) mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      if (subtitle) subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+      if (introText) introText.textContent = config.intro_text || defaultConfig.intro_text;
+      if (ctaButton) ctaButton.textContent = config.cta_button || defaultConfig.cta_button;
+
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+      document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, #764ba2 100%)`;
+      
+      const surfaces = document.querySelectorAll('.hero-section, .tabs-container, .accordion-header');
+      surfaces.forEach(el => el.style.backgroundColor = surfaceColor);
+
+      const textElements = document.querySelectorAll('.section-title, .feature-title, .accordion-header, .step-item strong');
+      textElements.forEach(el => el.style.color = textColor);
+
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) heroTitle.style.color = primaryActionColor;
+
+      const primaryButtons = document.querySelectorAll('.cta-button');
+      primaryButtons.forEach(btn => {
+        btn.style.backgroundColor = primaryActionColor;
+        btn.style.boxShadow = `0 4px 15px ${primaryActionColor}66`;
+      });
+
+      const secondaryTexts = document.querySelectorAll('.hero-description, .feature-description, .accordion-body, .step-item p');
+      secondaryTexts.forEach(el => el.style.color = secondaryActionColor);
+
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.body.style.fontSize = `${baseSize}px`;
+      
+      if (heroTitle) heroTitle.style.fontSize = `${baseSize * 1.875}px`;
+      const heroSubtitle = document.querySelector('.hero-subtitle');
+      if (heroSubtitle) heroSubtitle.style.fontSize = `${baseSize * 1.5}px`;
+      
+      const sectionTitles = document.querySelectorAll('.section-title');
+      sectionTitles.forEach(el => el.style.fontSize = `${baseSize * 2}px`);
+      
+      const featureTitles = document.querySelectorAll('.feature-title, .use-case-title');
+      featureTitles.forEach(el => el.style.fontSize = `${baseSize * 1.25}px`);
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              config.surface_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => {
+              config.primary_action_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => {
+              config.secondary_action_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            if (window.elementSdk) {
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            if (window.elementSdk) {
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["main_title", config.main_title || defaultConfig.main_title],
+        ["subtitle", config.subtitle || defaultConfig.subtitle],
+        ["intro_text", config.intro_text || defaultConfig.intro_text],
+        ["cta_button", config.cta_button || defaultConfig.cta_button]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+
+    // Tab functionality
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const targetTab = button.dataset.tab;
+        
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabPanels.forEach(panel => panel.classList.remove('active'));
+        
+        button.classList.add('active');
+        document.getElementById(targetTab).classList.add('active');
+      });
+    });
+
+    // Accordion functionality
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+    accordionHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const isActive = header.classList.contains('active');
+        
+        header.classList.toggle('active');
+        content.classList.toggle('active');
+      });
+    });
+
+    // CTA Button scroll functionality
+    document.getElementById('cta-button').addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabsContainer = document.querySelector('.tabs-container');
+      tabsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a457053a430ea82',t:'MTc2NDExODcyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
