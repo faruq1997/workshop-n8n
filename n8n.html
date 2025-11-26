@@ -382,7 +382,7 @@
      <p class="hero-description" id="intro-text">n8n adalah platform otomasi workflow open-source yang powerful, memungkinkan Anda menghubungkan berbagai aplikasi dan layanan untuk mengotomatisasi tugas-tugas repetitif.</p><button class="cta-button" id="cta-button">Mulai Belajar</button>
     </header>
     <main class="tabs-container">
-     <nav class="tabs-header"><button class="tab-button active" data-tab="intro">Pengenalan</button> <button class="tab-button" data-tab="features">Fitur Utama</button> <button class="tab-button" data-tab="start">Cara Mulai</button> <button class="tab-button" data-tab="examples">Contoh Workflow</button> <button class="tab-button" data-tab="faq">FAQ</button>
+     <nav class="tabs-header"><button class="tab-button active" data-tab="intro">Pengenalan</button> <button class="tab-button" data-tab="features">Fitur Utama</button> <button class="tab-button" data-tab="start">Cara Mulai</button> <button class="tab-button" data-tab="examples">Contoh Workflow</button> <button class="tab-button" data-tab="comparison">Tools Serupa</button> <button class="tab-button" data-tab="opportunities">Peluang Karir</button> <button class="tab-button" data-tab="faq">FAQ</button>
      </nav>
      <div class="tab-content">
       <article class="tab-panel active" id="intro">
@@ -444,18 +444,147 @@
        </div>
       </article>
       <article class="tab-panel" id="start">
-       <h2 class="section-title">Memulai dengan n8n</h2>
+       <h2 class="section-title">Memulai dengan n8n Cloud</h2>
+       <p style="margin-bottom: 2rem; color: #4a5568; font-size: 1.125rem;">Cara termudah untuk memulai adalah menggunakan n8n Cloud. Tidak perlu setup server atau instalasi yang rumit!</p>
        <ul class="step-list">
-        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Instalasi</strong> <p style="margin-top: 0.5rem; color: #718096;">Install n8n menggunakan npm atau Docker. Untuk npm:</p>
-         <div class="code-block">
-          npm install n8n -g<br>
-          n8n start
-         </div></li>
-        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Buat Workflow Pertama</strong> <p style="margin-top: 0.5rem; color: #718096;">Akses n8n di browser (default: localhost:5678), klik "New Workflow" dan mulai tambahkan nodes dari panel sebelah kiri.</p></li>
-        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Tambahkan Trigger</strong> <p style="margin-top: 0.5rem; color: #718096;">Pilih trigger node seperti "Webhook", "Cron", atau "Manual Trigger" untuk menentukan kapan workflow akan berjalan.</p></li>
-        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Koneksikan Nodes</strong> <p style="margin-top: 0.5rem; color: #718096;">Tambahkan nodes untuk action yang ingin dilakukan (misalnya: kirim email, simpan ke database, dll) dan hubungkan dengan trigger.</p></li>
-        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Test &amp; Aktivasi</strong> <p style="margin-top: 0.5rem; color: #718096;">Klik "Execute Workflow" untuk test, lalu aktifkan workflow dengan toggle di kanan atas agar berjalan otomatis.</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Daftar Akun Gratis</strong> <p style="margin-top: 0.5rem; color: #718096;">Kunjungi n8n.cloud dan daftar menggunakan email Anda. Tersedia free tier untuk mencoba fitur-fitur dasar n8n tanpa biaya.</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Akses Dashboard</strong> <p style="margin-top: 0.5rem; color: #718096;">Setelah verifikasi email, Anda langsung dapat akses ke dashboard n8n Cloud. Interface yang sama seperti self-hosted version, tapi tanpa perlu maintain server.</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Buat Workflow Pertama</strong> <p style="margin-top: 0.5rem; color: #718096;">Klik tombol "New Workflow" dan mulai drag-and-drop nodes dari panel sebelah kiri. Coba template yang sudah tersedia untuk belajar lebih cepat!</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Tambahkan Trigger</strong> <p style="margin-top: 0.5rem; color: #718096;">Pilih trigger node seperti "Webhook", "Schedule Trigger", atau "Manual Trigger" untuk menentukan kapan workflow akan berjalan.</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Hubungkan Aplikasi</strong> <p style="margin-top: 0.5rem; color: #718096;">Tambahkan nodes untuk berbagai aplikasi (Gmail, Slack, Google Sheets, dll). Authenticate setiap aplikasi dan konfigurasikan action yang diinginkan.</p></li>
+        <li class="step-item"><strong style="color: #2d3748; font-size: 1.125rem;">Test &amp; Aktivasi</strong> <p style="margin-top: 0.5rem; color: #718096;">Klik "Execute Workflow" untuk test, lalu aktifkan workflow dengan toggle di kanan atas. Workflow Anda akan berjalan otomatis sesuai trigger!</p></li>
        </ul>
+       <div style="background: #f7fafc; padding: 1.5rem; border-radius: 12px; margin-top: 2rem; border-left: 4px solid #48bb78;">
+        <h3 style="color: #2d3748; margin-bottom: 0.75rem; font-size: 1.125rem;">💡 Tips untuk Pemula</h3>
+        <ul style="color: #718096; margin-left: 1.5rem;">
+         <li style="margin-bottom: 0.5rem;">Mulai dengan template workflow yang sudah ada</li>
+         <li style="margin-bottom: 0.5rem;">Gunakan "Execute Node" untuk test setiap step satu per satu</li>
+         <li style="margin-bottom: 0.5rem;">Join komunitas n8n di Discord untuk bertanya dan sharing</li>
+         <li>Free tier cocok untuk belajar, upgrade nanti jika butuh lebih banyak executions</li>
+        </ul>
+       </div>
+      </article>
+      <article class="tab-panel" id="comparison">
+       <h2 class="section-title">Perbandingan dengan Tools Serupa</h2>
+       <p style="margin-bottom: 2rem; color: #4a5568; font-size: 1.125rem;">n8n bukan satu-satunya tools workflow automation di pasaran. Berikut perbandingan dengan alternatif populer lainnya:</p>
+       <div class="feature-card" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+         <div class="feature-icon" style="margin: 0 1rem 0 0;">
+          ⚡
+         </div>
+         <div>
+          <h3 class="feature-title" style="margin: 0;">Zapier</h3>
+          <p style="color: #a0aec0; font-size: 0.875rem; margin: 0;">Platform Automation Komersial</p>
+         </div>
+        </div>
+        <p class="feature-description" style="margin-bottom: 0.75rem;"><strong>Kelebihan:</strong> Interface super user-friendly, integrasi sangat banyak (5000+), tidak perlu technical knowledge</p>
+        <p class="feature-description" style="margin-bottom: 0.75rem;"><strong>Kekurangan:</strong> Harga mahal untuk high volume, tidak bisa self-host, limited customization</p>
+        <p class="feature-description"><strong>Cocok untuk:</strong> Non-technical users, bisnis dengan budget automation, use case sederhana</p>
+       </div>
+       <div class="feature-card" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+         <div class="feature-icon" style="margin: 0 1rem 0 0;">
+          🔷
+         </div>
+         <div>
+          <h3 class="feature-title" style="margin: 0;">Make (Integromat)</h3>
+          <p style="color: #a0aec0; font-size: 0.875rem; margin: 0;">Visual Automation Builder</p>
+         </div>
+        </div>
+        <p class="feature-description" style="margin-bottom: 0.75rem;"><strong>Kelebihan:</strong> Visual workflow yang sangat intuitif, fitur error handling bagus, pricing lebih fleksibel dari Zapier</p>
+        <p class="feature-description" style="margin-bottom: 0.75rem;"><strong>Kekurangan:</strong> Cloud-only, learning curve lebih tinggi, tidak open source</p>
+        <p class="feature-description"><strong>Cocok untuk:</strong> Business automation dengan workflow kompleks, yang butuh visual builder</p>
+       </div>
+       <div class="feature-card" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+         <div class="feature-icon" style="margin: 0 1rem 0 0;">
+          🤖
+         </div>
+         <div>
+          <h3 class="feature-title" style="margin: 0;">Apache Airflow</h3>
+          <p style="color: #a0aec0; font-size: 0.875rem; margin: 0;">Data Pipeline Platform</p>
+         </div>
+        </div>
+        <p class="feature-description" style="margin-bottom: 0.75rem;"><strong>Kelebihan:</strong> Powerful untuk data engineering, scalable, open source, Python-based</p>
+        <p class="feature-description" style="margin-bottom: 0.75rem;"><strong>Kekurangan:</strong> Butuh coding (Python), setup kompleks, lebih fokus ke data pipeline</p>
+        <p class="feature-description"><strong>Cocok untuk:</strong> Data engineers, big data processing, ETL workflows</p>
+       </div>
+       <div class="feature-card" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-left: 4px solid #48bb78;">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+         <div style="font-size: 2.5rem; margin: 0 1rem 0 0;">
+          🎯
+         </div>
+         <div>
+          <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0; color: white;">n8n</h3>
+          <p style="font-size: 0.875rem; margin: 0; opacity: 0.9;">Fair-Code Automation Platform</p>
+         </div>
+        </div>
+        <p style="margin-bottom: 0.75rem; opacity: 0.95;"><strong>Kelebihan:</strong> Open source, self-hostable, customizable, balance antara UI dan code, harga terjangkau</p>
+        <p style="margin-bottom: 0.75rem; opacity: 0.95;"><strong>Kekurangan:</strong> Integrasi lebih sedikit dari Zapier, community lebih kecil, butuh sedikit technical knowledge</p>
+        <p style="opacity: 0.95;"><strong>Cocok untuk:</strong> Developers, startup, yang butuh kontrol penuh, privacy-conscious users, automation dengan budget terbatas</p>
+       </div>
+       <div class="feature-card">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+         <div class="feature-icon" style="margin: 0 1rem 0 0;">
+          ⚙️
+         </div>
+         <div>
+          <h3 class="feature-title" style="margin: 0;">Power Automate</h3>
+          <p style="color: #a0aec0; font-size: 0.875rem; margin: 0;">Microsoft Automation Solution</p>
+         </div>
+        </div>
+        <p class="feature-description" style="margin-bottom: 0.75rem;"><strong>Kelebihan:</strong> Terintegrasi sempurna dengan ekosistem Microsoft, cocok untuk enterprise, AI capabilities</p>
+        <p class="feature-description" style="margin-bottom: 0.75rem;"><strong>Kekurangan:</strong> Terikat ke Microsoft, pricing bisa mahal, tidak open source</p>
+        <p class="feature-description"><strong>Cocok untuk:</strong> Perusahaan yang sudah pakai Microsoft 365, enterprise automation</p>
+       </div>
+      </article>
+      <article class="tab-panel" id="opportunities">
+       <h2 class="section-title">Peluang &amp; Prospek Mempelajari n8n</h2>
+       <p style="margin-bottom: 2rem; color: #4a5568; font-size: 1.125rem;">Menguasai n8n membuka berbagai peluang karir dan bisnis di era automation. Berikut prospek yang bisa Anda raih:</p>
+       <div class="use-case-card">
+        <h3 class="use-case-title">💼 Karir sebagai Automation Specialist</h3>
+        <p class="use-case-description">Banyak perusahaan mencari ahli automation untuk mengoptimalkan workflow mereka. Dengan skill n8n, Anda bisa bekerja sebagai Automation Engineer, Integration Specialist, atau Workflow Consultant dengan salary kompetitif. Demand untuk posisi ini terus meningkat seiring perusahaan mencari efisiensi operasional.</p>
+       </div>
+       <div class="use-case-card">
+        <h3 class="use-case-title">🚀 Freelance &amp; Consulting</h3>
+        <p class="use-case-description">Tawarkan jasa pembuatan workflow automation untuk bisnis kecil-menengah. Banyak UMKM butuh automation tapi tidak punya tim teknis. Anda bisa charge per project ($500-$5000+) untuk setup automation yang menghemat waktu mereka berjam-jam setiap minggu. Platform seperti Upwork, Fiverr, atau Sribulancer penuh dengan demand untuk skill ini.</p>
+       </div>
+       <div class="use-case-card">
+        <h3 class="use-case-title">📦 Jual Template Workflow</h3>
+        <p class="use-case-description">Buat dan jual template workflow n8n untuk use case populer (lead management, social media automation, data sync, dll). Dijual sebagai digital product di platform seperti Gumroad atau buatkan SaaS subscription. Passive income potential yang menjanjikan dengan sekali buat, jual berkali-kali.</p>
+       </div>
+       <div class="use-case-card">
+        <h3 class="use-case-title">🎓 Konten &amp; Edukasi</h3>
+        <p class="use-case-description">Buat course, tutorial YouTube, atau ebook tentang n8n automation. Market untuk pembelajaran automation sangat besar. Monetize melalui YouTube ads, course sales (Udemy, Skillshare), atau membership community. Bonus: build personal brand sebagai expert di bidang automation.</p>
+       </div>
+       <div class="use-case-card">
+        <h3 class="use-case-title">🏢 Optimasi Bisnis Sendiri</h3>
+        <p class="use-case-description">Gunakan n8n untuk automate bisnis Anda sendiri - ecommerce, agency, SaaS, atau apapun. Automate customer service, marketing, inventory management, reporting, dll. Hemat waktu berjam-jam yang bisa dialokasikan untuk growth. Skill ini jadi competitive advantage untuk entrepreneur.</p>
+       </div>
+       <div class="use-case-card">
+        <h3 class="use-case-title">🔧 Integrasi dengan Tech Stack Modern</h3>
+        <p class="use-case-description">n8n perfect untuk connect berbagai tools modern: API development, headless CMS, no-code platforms, AI tools (OpenAI, etc). Skill ini melengkapi stack developer modern dan membuka peluang di startup tech yang heavy automation. Kombinasi dengan skills seperti API design, databases, dan cloud computing sangat valuable.</p>
+       </div>
+       <div style="background: white; padding: 2rem; border-radius: 12px; margin-top: 2rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: #2d3748; margin-bottom: 1rem; font-size: 1.5rem;">📈 Proyeksi Market</h3>
+        <ul style="color: #4a5568; margin-left: 1.5rem; line-height: 1.8;">
+         <li style="margin-bottom: 0.75rem;"><strong>Workflow automation market</strong> diproyeksi tumbuh 23.4% CAGR sampai 2030</li>
+         <li style="margin-bottom: 0.75rem;"><strong>70% perusahaan</strong> akan adopt automation tools dalam 3 tahun ke depan</li>
+         <li style="margin-bottom: 0.75rem;"><strong>Remote work era</strong> meningkatkan kebutuhan integration &amp; automation tools</li>
+         <li style="margin-bottom: 0.75rem;"><strong>No-code/Low-code movement</strong> membuat automation lebih accessible untuk semua</li>
+         <li><strong>AI integration</strong> dengan automation tools (seperti n8n + OpenAI) membuka use case baru yang unlimited</li>
+        </ul>
+       </div>
+       <div style="background: #f7fafc; padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; border-left: 4px solid #667eea;">
+        <h3 style="color: #2d3748; margin-bottom: 0.75rem; font-size: 1.125rem;">💡 Tips Memaksimalkan Peluang</h3>
+        <ul style="color: #718096; margin-left: 1.5rem;">
+         <li style="margin-bottom: 0.5rem;">Build portfolio dengan showcase automation projects Anda</li>
+         <li style="margin-bottom: 0.5rem;">Aktif di komunitas n8n - share knowledge dan network</li>
+         <li style="margin-bottom: 0.5rem;">Kombinasikan dengan skill lain: API, databases, cloud platforms</li>
+         <li style="margin-bottom: 0.5rem;">Document journey Anda - content adalah marketing terbaik</li>
+         <li>Stay updated dengan integrasi baru dan use case emerging</li>
+        </ul>
+       </div>
       </article>
       <article class="tab-panel" id="examples">
        <h2 class="section-title">Contoh Use Case Populer</h2>
@@ -706,5 +835,5 @@
       tabsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a457053a430ea82',t:'MTc2NDExODcyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a45949b40b3e785',t:'MTc2NDEyMDIwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
